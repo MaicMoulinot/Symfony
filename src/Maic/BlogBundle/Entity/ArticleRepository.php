@@ -43,5 +43,5 @@ class ArticleRepository extends EntityRepository {
         $result = $queryBuilder->getQuery()->getSingleResult();
         return $result;
     }
-
+    
 }

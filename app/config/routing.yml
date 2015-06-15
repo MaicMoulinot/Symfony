@@ -5,3 +5,8 @@ maic_blog:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+# import routes from a controller directory
+blog:
+    resource: "@MaicBlogBundle/Controller"
+    type:     annotation

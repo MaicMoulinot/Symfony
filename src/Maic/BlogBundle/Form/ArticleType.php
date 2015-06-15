@@ -16,7 +16,7 @@ class ArticleType extends AbstractType {
         $builder
                 ->add('auteur')
                 ->add('titre')
-                ->add('contenu', 'text', array('attr' => array('class' => 'ckeditor')))
+                ->add('contenu', 'textarea', array('attr' => array('class' => 'ckeditor')))
 //            ->add('image', new ImageType)
                 ->add('categories', 'entity', array('class' => 'MaicBlogBundle:Categorie',
                     'property' => 'nom',

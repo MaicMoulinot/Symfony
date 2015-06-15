@@ -1,32 +1,68 @@
 <h4 class="text-danger">Veuillez remplir les champs suivants</h4>
 <div>
     <form method="post" {{ form_enctype(form) }}>
-        {#{{ form_widget(form) }}#}
-
-        {{ form_errors(form.titre) }}
-        {{ form_label(form.titre, 'Titre :') }}
-        {{ form_widget(form.titre, {'attr': {'class': 'form-group'}}) }}
-        <br/>
-        {{ form_errors(form.contenu) }}
-        {{ form_label(form.contenu, 'Contenu :') }}
-        {{ form_widget(form.contenu, {'attr': {'class': 'form-group'}}) }}
-        <br/>
-        {{ form_errors(form.auteur) }}
-        {{ form_label(form.auteur, 'Auteur :') }}
-        {{ form_widget(form.auteur, {'attr': {'class': 'form-group'}}) }}
-        <br/>
-        {{ form_errors(form.publication) }}
-        {{ form_label(form.publication, 'Publication ?') }}
-        {{ form_widget(form.publication, {'checkbox': {'class': 'form-group'}}) }}
-        <br/>
-        {{ form_errors(form.datecreation) }}
-        {{ form_label(form.datecreation, 'Date :') }}
-        {{ form_widget(form.datecreation, {'attr': {'class': 'form-group'}}) }}
-        <br/>
-        {{ form_rest(form) }}
-        <br>
-        <label>Enregistrer l'article :
-            <input type="submit" class="btn btn-danger" />
-        </label>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.auteur, 'Auteur') }}
+                {{ form_errors(form.auteur) }}
+            </p>
+            <p>
+                {{ form_widget(form.auteur, {'attr': {'class': 'form-group'}}) }}
+            </p>
+        </div>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.titre, 'Titre') }}
+                {{ form_errors(form.titre) }}
+            </p>
+            <p>
+                {{ form_widget(form.titre, {'attr': {'class': 'form-group'}}) }}
+            </p>
+        </div>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.contenu, 'Contenu') }}
+                {{ form_errors(form.contenu) }}
+            </p>
+            <p>
+                {{ form_widget(form.contenu, {'attr': {'class': 'form-group', 'cols': '100', 'rows': '5'}}) }}
+            </p>
+        </div>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.categories, 'Catégories') }}
+                {{ form_errors(form.categories) }}
+            </p>
+            <p>
+                {{ form_widget(form.categories, {'checkbox': {'class': 'form-group'}}) }}
+            </p>
+        </div>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.publication, 'Publication?') }}
+                {{ form_errors(form.publication) }}
+            </p>
+            <p>
+                {{ form_widget(form.publication, {'checkbox': {'class': 'form-group'}}) }}
+            </p>
+        </div>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.datecreation, 'Date') }}
+                {{ form_errors(form.datecreation) }}
+            </p>
+            <p>
+                {{ form_widget(form.datecreation, {'attr': {'class': 'form-group'}}) }}
+            </p>
+        </div>
+        <div>
+            {{ form_rest(form) }}
+            <br/>
+            <p class="text-danger">
+                <label>Enregistrer l'article
+                    <input type="submit" class="btn btn-danger" />
+                </label>
+            </p>
+        </div>
     </form>
 </div>

@@ -2,8 +2,6 @@
 {% block title %}{{parent() }}: article {{ article.id }} du blog{% endblock %}
 {% block h1 %}L'article {{parent() }}{% endblock %}
 {% block MaicBlog_body %}
-    <h2>Modification de l'article {{ article.titre }}</h2>
-    <p>Par {{ article.auteur }}</p>
-    <p>{{ article.contenu }}</p>
+    <h2>Modification de l'article</h2>
     {% include 'MaicBlogBundle:Blog:formulaire.html.twig' %}
 {% endblock %}
