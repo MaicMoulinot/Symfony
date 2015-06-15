@@ -1,0 +1,7 @@
+maic_blog:
+    resource: "@MaicBlogBundle/Resources/config/routing.yml"
+    prefix:   /blog
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

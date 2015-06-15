@@ -1,0 +1,55 @@
+{% extends "MaicBlogBundle::layout.html.twig" %}
+{% block title %}{{parent() }}: article {{ article.id }}{% endblock %}
+{% block h1 %}L'article {{parent() }}{% endblock %}
+{% block MaicBlog_body %}
+    <blockquote>
+        <div class='row'>
+            <div class="col-lg-2">
+                {% if article.image is not null %}
+                    <img src="{{ asset('images/') }}{{ article.image.url }}" 
+                         alt="{{ article.image.alt|e }}" class="img-rounded img-responsive">
+                    </img>
+                {% endif %}
+            </div>
+            <div class="col-lg-10">
+                <h2 class="text-info">{{ article.titre }}</h2>
+                {% if article.categories is not empty %}
+                    <ul class="list-inline nav nav-pills">
+                        {% for categorie in article.categories %}
+                            <li>
+                                <span class="label label-warning">{{ categorie.nom }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </blockquote>
+    <blockquote>
+        <p class="text-justify">{{ article.contenu }}</p>
+        <footer class="navbar-text navbar-right">
+            <p class="text-info">
+                Par <span class="label label-primary">{{ article.auteur }}</span> 
+                le {{ article.datecreation|date('d/m/Y à H:i') }}
+            </p>
+        </footer>
+    </blockquote>
+    {% if article.commentaires is not empty %}
+        <h3>
+            <span class="glyphicon glyphicon-pushpin"></span> Commentaires
+        </h3>
+        <ul class="list-unstyled">
+            {% for commentaire in article.commentaires %}
+                <li>
+                    <blockquote class="small">
+                        <h5 class="text-info">
+                            <span class="label label-primary">{{ commentaire.auteur }}</span>
+                            a écrit le {{ commentaire.datecreation|date('d/m/Y à H:i') }}
+                        </h5>
+                        <p class="text-justify text-muted">{{ commentaire.contenu }}</p>
+                    </blockquote>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

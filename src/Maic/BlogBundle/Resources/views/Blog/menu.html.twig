@@ -1,0 +1,31 @@
+<div class='row'>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <h3 class="text-center">Derniers articles créés</h3>
+        <ul class="list-unstyled">
+            {% for article in articles %}
+                <li>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                <a href="{{ path('maic_blog_voir', {id:article.id}) }}">{{ article.titre }}</a>
+                            </h5>
+                        </div>
+                        <div class="panel-body">
+                            {% if article.contenu|length > 100 %}
+                                <p class="text-justify">{{ article.contenu|slice(0, 100) }} (...)</p>
+                            {% else %}
+                                <p class="text-justify">{{ article.contenu}}</p>
+                            {% endif %}
+                        </div>
+                        <div class="panel-footer">
+                            Par <a href="#" class="navbar-link">{{ article.auteur }}</a> 
+                            le {{ article.datecreation|date('d/m/Y à H:i') }}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-lg-1"></div>
+</div>

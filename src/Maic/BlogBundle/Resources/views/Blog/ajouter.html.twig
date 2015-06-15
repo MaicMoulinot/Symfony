@@ -1,0 +1,7 @@
+{% extends "MaicBlogBundle::layout.html.twig" %}
+{% block title %}{{parent() }}: création d'un article du blog{% endblock %}
+{% block h1 %}Création d'un article {{parent() }}{% endblock %}
+{% block MaicBlog_body %}
+    <h2>Nouvel article</h2>
+    {% include 'MaicBlogBundle:Blog:formulaire.html.twig' %}
+{% endblock %}

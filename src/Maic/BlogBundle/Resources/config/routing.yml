@@ -1,0 +1,21 @@
+maic_blog_homepage:
+    path:     /{page}
+    defaults: { _controller: MaicBlogBundle:Blog:index, page: 1 }
+    requirements:
+        page: \d+
+
+maic_blog_voir:
+    path:     /article/{id}
+    defaults: { _controller: MaicBlogBundle:Blog:voir }
+    requirements:
+        id: \d+
+        
+maic_blog_modifier:
+    path:     /modifier/{id}
+    defaults: { _controller: MaicBlogBundle:Blog:modifier }
+    requirements:
+        id: \d+
+        
+maic_blog_ajouter:
+    path:     /ajouter
+    defaults: { _controller: MaicBlogBundle:Blog:ajouter }

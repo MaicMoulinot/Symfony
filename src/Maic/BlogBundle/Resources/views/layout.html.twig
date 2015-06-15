@@ -1,0 +1,7 @@
+{% extends "::layout.html.twig" %} {#extends NomBundle:NomController:NomFichier#}
+{% block body %}
+    <div class="page-header">
+        <h1 class="header">{% block h1 %}made in Ma(g)ic Land{% endblock %}</h1>
+    </div>
+    {% block MaicBlog_body %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,32 @@
+<h4 class="text-danger">Veuillez remplir les champs suivants</h4>
+<div>
+    <form method="post" {{ form_enctype(form) }}>
+        {#{{ form_widget(form) }}#}
+
+        {{ form_errors(form.titre) }}
+        {{ form_label(form.titre, 'Titre :') }}
+        {{ form_widget(form.titre, {'attr': {'class': 'form-group'}}) }}
+        <br/>
+        {{ form_errors(form.contenu) }}
+        {{ form_label(form.contenu, 'Contenu :') }}
+        {{ form_widget(form.contenu, {'attr': {'class': 'form-group'}}) }}
+        <br/>
+        {{ form_errors(form.auteur) }}
+        {{ form_label(form.auteur, 'Auteur :') }}
+        {{ form_widget(form.auteur, {'attr': {'class': 'form-group'}}) }}
+        <br/>
+        {{ form_errors(form.publication) }}
+        {{ form_label(form.publication, 'Publication ?') }}
+        {{ form_widget(form.publication, {'checkbox': {'class': 'form-group'}}) }}
+        <br/>
+        {{ form_errors(form.datecreation) }}
+        {{ form_label(form.datecreation, 'Date :') }}
+        {{ form_widget(form.datecreation, {'attr': {'class': 'form-group'}}) }}
+        <br/>
+        {{ form_rest(form) }}
+        <br>
+        <label>Enregistrer l'article :
+            <input type="submit" class="btn btn-danger" />
+        </label>
+    </form>
+</div>
