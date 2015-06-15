@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class BlogController extends Controller {
 
     /**
-     * 
+     * Affiche la liste de tous les articles.
      * @param type $page
      * @return type
      * @Template()
@@ -27,7 +27,7 @@ class BlogController extends Controller {
     }
 
     /**
-     * 
+     * Affiche un article avec tous ses détails.
      * @param type $id
      * @return type $article
      * @Template()
@@ -39,7 +39,7 @@ class BlogController extends Controller {
     }
 
     /**
-     * 
+     * Modifie un article existant.
      * @param Article $article
      * @return type
      * @Template()
@@ -60,7 +60,7 @@ class BlogController extends Controller {
     }
 
     /**
-     * 
+     * Crée un nouvel article.
      * @return type
      * @Template()
      */
@@ -81,7 +81,7 @@ class BlogController extends Controller {
     }
 
     /**
-     * 
+     * Supprime l'article.
      * @param Article $article
      * @Route("/del/{id}", name="maic_blog_supprimer", requirements={"id" = "\d+"})
      */
@@ -93,7 +93,7 @@ class BlogController extends Controller {
     }
 
     /**
-     * 
+     * Affiche les 3 derniers articles publiés par date de création descendante.
      * @return type
      * @Template()
      */
