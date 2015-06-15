@@ -17,7 +17,7 @@ class BlogController extends Controller {
      * 
      * @param type $page
      * @return type
-     * @Template("MaicBlogBundle:Blog:index.html.twig")
+     * @Template()
      * @Route("/{page}", name="maic_blog_homepage", requirements={"id" = "\d+"}, defaults={"id" = 1})
      */
     public function indexAction($page) {
@@ -30,7 +30,7 @@ class BlogController extends Controller {
      * 
      * @param type $id
      * @return type $article
-     * @Template("MaicBlogBundle:Blog:voir.html.twig")
+     * @Template()
      */
     public function voirAction($id) {
         $em = $this->getDoctrine()->getManager();
@@ -92,26 +92,10 @@ class BlogController extends Controller {
         $this->redirectToRoute('maic_blog_homepage', array('page' => '1'));
     }
 
-//    private function editArticle($article) {
-//        $form = $this->createForm(new ArticleType(), $article);
-//        $request = $this->getRequest();
-//        $result = false;
-//        if ($request->getMethod() == 'POST') {
-//            $form->handleRequest($request);
-//            if ($form->isValid()) {
-//                $entityManager = $this->getDoctrine()->getManager();
-//                $entityManager->persist($article);
-//                $entityManager->flush();
-//                $result = true;
-//            }
-//        }
-//        return $result;
-//    }
-
     /**
      * 
      * @return type
-     * @Template("MaicBlogBundle:Blog:menu.html.twig")
+     * @Template()
      */
     public function menuAction() {
         $em = $this->getDoctrine()->getManager();
