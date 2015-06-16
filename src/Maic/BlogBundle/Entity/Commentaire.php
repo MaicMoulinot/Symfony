@@ -3,6 +3,7 @@
 namespace Maic\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Commentaire
@@ -25,6 +26,7 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
+     * @Assert\NotBlank()
      */
     private $contenu;
 
@@ -32,6 +34,11 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="auteur", type="string", length=255)
+     * @Assert\Length(
+     *      min = "4",
+     *      max = "20",
+     *      minMessage = "Votre nom doit faire au moins {{ limit }} caractères",
+     *      maxMessage = "Votre nom ne peut pas être plus long que {{ limit }} caractères")
      */
     private $auteur;
 
@@ -47,6 +54,7 @@ class Commentaire
      *
      * @ORM\ManyToOne(targetEntity="Maic\BlogBundle\Entity\Article", inversedBy="commentaires", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $article;
 

@@ -14,15 +14,19 @@ class ArticleType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('auteur')
-                ->add('titre')
-                ->add('contenu', 'textarea', array('attr' => array('class' => 'ckeditor')))
+                ->add('auteur', null, array('attr' => array(
+                    'title' => 'Votre pseudo doit contenir au moins 4 caractères', 
+                    'class' => 'text-info')))
+                ->add('titre', null, array('attr' => array(
+                    'title' => 'Le titre doit contenir au moins 10 caractères', 
+                    'class' => 'text-info')))
+                ->add('contenu', 'textarea', array('attr' => array('class' => 'textarea')))
 //            ->add('image', new ImageType)
                 ->add('categories', 'entity', array('class' => 'MaicBlogBundle:Categorie',
                     'property' => 'nom',
                     'multiple' => true,
                     'expanded' => true))
-                ->add('datecreation', 'date')
+                ->add('datecreation', 'datetime')
                 ->add('publication', 'checkbox', array('required' => false))
         ;
     }

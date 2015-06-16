@@ -2,7 +2,14 @@
 {% block title %}{{parent() }}, le blog page {{ page }}{% endblock %}
 {% block h1 %}Le blog {{parent() }}{% endblock %}
 {% block MaicBlog_body %}
-    <h2>Liste des articles</h2>
+    <h2>
+        <div class="row">
+            <div class="col-lg-3">Liste des articles</div>
+            <div class="col-lg-9">
+                <a href="{{ path('maic_blog_ajouter') }}" class="btn btn-danger" role="button">Créer un article</a>
+            </div>
+        </div>
+    </h2>
     <p>Page {{ page }}</p>
     <ul class="list-unstyled">
         {% for article in articles %}

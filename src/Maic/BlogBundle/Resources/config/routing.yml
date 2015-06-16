@@ -19,3 +19,9 @@ maic_blog_modifier:
 maic_blog_ajouter:
     path:     /ajouter
     defaults: { _controller: MaicBlogBundle:Blog:ajouter }
+    
+maic_blog_supprimer:
+    path:     /del/{id}
+    defaults: { _controller: MaicBlogBundle:Blog:supprimer }
+    requirements:
+        id: \d+

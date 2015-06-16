@@ -3,8 +3,7 @@
 namespace Maic\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-//use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -27,6 +26,7 @@ class Article {
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255, unique=true)
+     * @Assert\Length(min="10")
      */
     private $titre;
 
@@ -34,6 +34,7 @@ class Article {
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
+     * @Assert\NotBlank()
      */
     private $contenu;
 
@@ -41,6 +42,11 @@ class Article {
      * @var string
      *
      * @ORM\Column(name="auteur", type="string", length=255)
+     * @Assert\Length(
+     *      min = "4",
+     *      max = "20",
+     *      minMessage = "Votre nom doit faire au moins {{ limit }} caractères",
+     *      maxMessage = "Votre nom ne peut pas être plus long que {{ limit }} caractères")
      */
     private $auteur;
 
@@ -48,6 +54,7 @@ class Article {
      * @var \DateTime
      *
      * @ORM\Column(name="datecreation", type="datetime")
+     * @Assert\DateTime()
      */
     private $datecreation;
 
@@ -62,20 +69,25 @@ class Article {
      * @var Image
      *
      * @ORM\OneToOne(targetEntity="Maic\BlogBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $image;
-    
+
     /**
      * @var Categorie
      *
      * @ORM\ManyToMany(targetEntity="Maic\BlogBundle\Entity\Categorie", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $categories;
-    
+
     /**
      * @var Commentaire
      *
-     * @ORM\OneToMany(targetEntity="Maic\BlogBundle\Entity\Commentaire", mappedBy="article", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Maic\BlogBundle\Entity\Commentaire", 
+     *      mappedBy="article", 
+     *      cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $commentaires;
 
@@ -200,15 +212,13 @@ class Article {
         return $this->publication;
     }
 
-
     /**
      * Set Image
      *
      * @param \Maic\BlogBundle\Entity\Image $image
      * @return Article
      */
-    public function setImage(\Maic\BlogBundle\Entity\Image $image = null)
-    {
+    public function setImage(\Maic\BlogBundle\Entity\Image $image = null) {
         $this->image = $image;
 
         return $this;
@@ -219,8 +229,7 @@ class Article {
      *
      * @return \Maic\BlogBundle\Entity\Image 
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -230,8 +239,7 @@ class Article {
      * @param \Maic\BlogBundle\Entity\Categorie $categorie
      * @return Article
      */
-    public function addCategorie(\Maic\BlogBundle\Entity\Categorie $categorie)
-    {
+    public function addCategorie(\Maic\BlogBundle\Entity\Categorie $categorie) {
         $this->categories[] = $categorie;
 
         return $this;
@@ -242,8 +250,7 @@ class Article {
      *
      * @param \Maic\BlogBundle\Entity\Categorie $categorie
      */
-    public function removeCategorie(\Maic\BlogBundle\Entity\Categorie $categorie)
-    {
+    public function removeCategorie(\Maic\BlogBundle\Entity\Categorie $categorie) {
         $this->categories->removeElement($categorie);
     }
 
@@ -252,8 +259,7 @@ class Article {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->categories;
     }
 
@@ -263,8 +269,7 @@ class Article {
      * @param \Maic\BlogBundle\Entity\Categorie $categories
      * @return Article
      */
-    public function addCategory(\Maic\BlogBundle\Entity\Categorie $categories)
-    {
+    public function addCategory(\Maic\BlogBundle\Entity\Categorie $categories) {
         $this->categories[] = $categories;
 
         return $this;
@@ -275,8 +280,7 @@ class Article {
      *
      * @param \Maic\BlogBundle\Entity\Categorie $categories
      */
-    public function removeCategory(\Maic\BlogBundle\Entity\Categorie $categories)
-    {
+    public function removeCategory(\Maic\BlogBundle\Entity\Categorie $categories) {
         $this->categories->removeElement($categories);
     }
 
@@ -286,8 +290,7 @@ class Article {
      * @param \Maic\BlogBundle\Entity\Commentaire $commentaire
      * @return Article
      */
-    public function addCommentaire(\Maic\BlogBundle\Entity\Commentaire $commentaire)
-    {
+    public function addCommentaire(\Maic\BlogBundle\Entity\Commentaire $commentaire) {
         $this->commentaires[] = $commentaire;
 
         return $this;
@@ -298,8 +301,7 @@ class Article {
      *
      * @param \Maic\BlogBundle\Entity\Commentaire $commentaire
      */
-    public function removeCommentaire(\Maic\BlogBundle\Entity\Commentaire $commentaire)
-    {
+    public function removeCommentaire(\Maic\BlogBundle\Entity\Commentaire $commentaire) {
         $this->commentaires->removeElement($commentaire);
     }
 
@@ -308,8 +310,8 @@ class Article {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCommentaires()
-    {
+    public function getCommentaires() {
         return $this->commentaires;
     }
+
 }

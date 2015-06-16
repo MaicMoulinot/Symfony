@@ -39,31 +39,34 @@
         </div>
         <div class="col-lg-7">
             <a href="{{ path('maic_blog_modifier', {id:article.id}) }}" 
-               class="btn btn-primary" role="button">Modifier</a>
+               class="btn btn-danger" role="button">Modifier</a>
             <a href="{{ path('maic_blog_supprimer', {id:article.id}) }}" 
-               class="btn btn-primary" role="button">Supprimer</a>
+               class="btn btn-danger" role="button">Supprimer</a>
             <a href="{{ path('maic_blog_homepage', {page:1}) }}" 
-               class="btn btn-primary" role="button">Accueil</a>
+               class="btn btn-danger" role="button">Accueil</a>
         </div>
         <div class="col-lg-3">
         </div>
     </div>
-    {% if article.commentaires is not empty %}
-        <h3>
-            <span class="glyphicon glyphicon-pushpin"></span> Commentaires
-        </h3>
-        <ul class="list-unstyled">
-            {% for commentaire in article.commentaires %}
-                <li>
-                    <blockquote class="small">
-                        <h5 class="text-info">
-                            <span class="label label-primary">{{ commentaire.auteur }}</span>
-                            a écrit le {{ commentaire.datecreation|date('d/m/Y à H:i') }}
-                        </h5>
-                        <p class="text-justify text-muted">{{ commentaire.contenu }}</p>
-                    </blockquote>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <div>
+        {% if article.commentaires is not empty %}
+            <h3>
+                <span class="glyphicon glyphicon-pushpin"></span> Commentaires
+            </h3>
+            <ul class="list-unstyled">
+                {% for commentaire in article.commentaires %}
+                    <li>
+                        <blockquote class="small">
+                            <h5 class="text-info">
+                                <span class="label label-primary">{{ commentaire.auteur }}</span>
+                                a écrit le {{ commentaire.datecreation|date('d/m/Y à H:i') }}
+                            </h5>
+                            <p class="text-justify text-muted">{{ commentaire.contenu }}</p>
+                        </blockquote>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    {% include 'MaicBlogBundle:Blog:formCommentaire.html.twig' %}
 {% endblock %}

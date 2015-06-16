@@ -4,7 +4,9 @@ namespace Maic\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Maic\BlogBundle\Form\ArticleType;
-use \Maic\BlogBundle\Entity\Article;
+use Maic\BlogBundle\Form\CommentaireType;
+use Maic\BlogBundle\Entity\Article;
+use Maic\BlogBundle\Entity\Commentaire;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -33,9 +35,22 @@ class BlogController extends Controller {
      * @Template()
      */
     public function voirAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $article = $em->getRepository('MaicBlogBundle:Article')->getArticleDetails($id);
-        return array('article' => $article);
+        $entityManager = $this->getDoctrine()->getManager();
+        $article = $entityManager->getRepository('MaicBlogBundle:Article')->getArticleDetails($id);
+
+        $request = $this->getRequest();
+        $commentaire = new Commentaire();
+        $form = $this->createForm(new CommentaireType(), $commentaire);
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $commentaire->setArticle($article);
+                $entityManager->persist($commentaire);
+                $entityManager->flush();
+                return $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
+            }
+        }
+        return array('article' => $article, 'form' => $form->createView());
     }
 
     /**
@@ -83,13 +98,12 @@ class BlogController extends Controller {
     /**
      * Supprime l'article.
      * @param Article $article
-     * @Route("/del/{id}", name="maic_blog_supprimer", requirements={"id" = "\d+"})
      */
     public function supprimerAction(Article $article) {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($article);
         $entityManager->flush();
-        $this->redirectToRoute('maic_blog_homepage', array('page' => '1'));
+        return $this->redirectToRoute('maic_blog_homepage', array('page' => '1'));
     }
 
     /**

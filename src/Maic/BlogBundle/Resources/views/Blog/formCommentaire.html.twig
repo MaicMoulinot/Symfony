@@ -1,0 +1,32 @@
+<h4 class="text-danger">Ajout d'un commentaire</h4>
+<div>
+    <form method="post" {{ form_enctype(form) }}>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.auteur, 'Auteur') }}
+                {{ form_errors(form.auteur) }}
+            </p>
+            <p>
+                {{ form_widget(form.auteur, {'attr': {'class': 'form-group'}}) }}
+            </p>
+        </div>
+        <div>
+            <p class="text-danger">
+                {{ form_label(form.contenu, 'Contenu') }}
+                {{ form_errors(form.contenu) }}
+            </p>
+            <p>
+                {{ form_widget(form.contenu, {'attr': {'class': 'form-group', 'cols': '100', 'rows': '5'}}) }}
+            </p>
+        </div>
+        <div>
+            {{ form_rest(form) }}
+            <br/>
+            <p class="text-danger">
+                <label>Publier le commentaire
+                    <input type="submit" class="btn btn-danger" />
+                </label>
+            </p>
+        </div>
+    </form>
+</div>
