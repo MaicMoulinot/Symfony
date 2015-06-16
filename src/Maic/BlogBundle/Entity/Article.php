@@ -90,7 +90,17 @@ class Article {
      * @Assert\Valid()
      */
     private $commentaires;
+    
+    /**
+     * @var Slug
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
 
+    /**
+     * Constructor.
+     */
     public function __construct() {
         $this->datecreation = new \DateTime();
         $this->publication = true;
@@ -314,4 +324,27 @@ class Article {
         return $this->commentaires;
     }
 
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }

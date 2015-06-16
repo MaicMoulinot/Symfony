@@ -60,18 +60,7 @@ class BlogController extends Controller {
      * @Template()
      */
     public function modifierAction(Article $article) {
-        $form = $this->createForm(new ArticleType(), $article);
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($article);
-                $entityManager->flush();
-                return $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
-            }
-        }
-        return array('article' => $article, 'form' => $form->createView());
+        return $this->persistArticle($article);
     }
 
     /**
@@ -81,20 +70,40 @@ class BlogController extends Controller {
      */
     public function ajouterAction() {
         $article = new Article();
+        return $this->persistArticle($article);
+    }
+
+    /**
+     * Fonction de persistance d'un article.
+     * @param Article $article
+     * @return type
+     */
+    private function persistArticle(Article $article) {
+        $isValid = false;
         $form = $this->createForm(new ArticleType(), $article);
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                // Génération du Slug.
+                $slugger = $this->get('maic_blog.slugger');
+                $slug = $slugger->getSlug($article->getTitre());
+                $article->setSlug($slug);
+                
+                // Persistance du l'article.
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($article);
                 $entityManager->flush();
-                return $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
+                $isValid = true;
             }
         }
-        return array('form' => $form->createView());
+        $return = array('article' => $article, 'form' => $form->createView());
+        if ($isValid) {
+            $return = $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
+        }
+        return $return;
     }
-
+    
     /**
      * Supprime l'article.
      * @param Article $article

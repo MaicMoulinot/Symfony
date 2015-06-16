@@ -58,7 +58,9 @@ class Commentaire
      */
     private $article;
 
-    
+    /**
+     * Constructor.
+     */
     public function __construct() {
         $this->datecreation = new \DateTime();
     }
