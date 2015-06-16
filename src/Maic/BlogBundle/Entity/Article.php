@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="Maic\BlogBundle\Entity\ArticleRepository")
+ * @ORM\HasLifecycleCallBacks()
  */
 class Article {
 
@@ -90,11 +91,11 @@ class Article {
      * @Assert\Valid()
      */
     private $commentaires;
-    
+
     /**
      * @var Slug
      *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -324,15 +325,13 @@ class Article {
         return $this->commentaires;
     }
 
-
     /**
      * Set slug
      *
      * @param string $slug
      * @return Article
      */
-    public function setSlug($slug)
-    {
+    public function setSlug($slug) {
         $this->slug = $slug;
 
         return $this;
@@ -343,8 +342,7 @@ class Article {
      *
      * @return string 
      */
-    public function getSlug()
-    {
+    public function getSlug() {
         return $this->slug;
     }
 }

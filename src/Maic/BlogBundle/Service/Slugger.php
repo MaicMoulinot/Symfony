@@ -25,5 +25,4 @@ class Slugger {
         $clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
         return $clean;
     }
-
 }

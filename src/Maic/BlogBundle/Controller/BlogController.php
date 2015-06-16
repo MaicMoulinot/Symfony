@@ -20,7 +20,7 @@ class BlogController extends Controller {
      * @param type $page
      * @return type
      * @Template()
-     * @Route("/{page}", name="maic_blog_homepage", requirements={"id" = "\d+"}, defaults={"id" = 1})
+     * @Route("/{page}", name="maic_blog_homepage", requirements={"page" = "\d+"}, defaults={"page" = 1})
      */
     public function indexAction($page) {
         $em = $this->getDoctrine()->getManager();
@@ -30,21 +30,22 @@ class BlogController extends Controller {
 
     /**
      * Affiche un article avec tous ses détails.
-     * @param type $id
+     * @param type $article
      * @return type $article
      * @Template()
+     * @Route("/article/{id}", name="maic_blog_voir", requirements={"id" = "\d+"}, defaults={"id" = 1})
+     * @Route("/article/{slug}", name="maic_blog_voir_slug")
      */
-    public function voirAction($id) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $article = $entityManager->getRepository('MaicBlogBundle:Article')->getArticleDetails($id);
-
-        $request = $this->getRequest();
+    public function voirAction(Article $article) {
+//        $article = $entityManager->getRepository('MaicBlogBundle:Article')->getArticleDetails($id);
         $commentaire = new Commentaire();
         $form = $this->createForm(new CommentaireType(), $commentaire);
+        $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $commentaire->setArticle($article);
+                $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($commentaire);
                 $entityManager->flush();
                 return $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
@@ -58,6 +59,8 @@ class BlogController extends Controller {
      * @param Article $article
      * @return type
      * @Template()
+     * @Route("/edit/{id}", name="maic_blog_modifier", requirements={"id" = "\d+"}, defaults={"id" = 1})
+     * @Route("/edit/{slug}", name="maic_blog_modifier_slug")
      */
     public function modifierAction(Article $article) {
         return $this->persistArticle($article);
@@ -67,6 +70,8 @@ class BlogController extends Controller {
      * Crée un nouvel article.
      * @return type
      * @Template()
+     * @Route("/add", name="maic_blog_ajouter")
+     * @Route("/add", name="maic_blog_ajouter_slug")
      */
     public function ajouterAction() {
         $article = new Article();
@@ -86,9 +91,9 @@ class BlogController extends Controller {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 // Génération du Slug.
-                $slugger = $this->get('maic_blog.slugger');
-                $slug = $slugger->getSlug($article->getTitre());
-                $article->setSlug($slug);
+//                $slugger = $this->get('maic_blog.slugger');
+//                $slug = $slugger->getSlug($article->getTitre());
+//                $article->setSlug($slug);
                 
                 // Persistance du l'article.
                 $entityManager = $this->getDoctrine()->getManager();
@@ -107,6 +112,8 @@ class BlogController extends Controller {
     /**
      * Supprime l'article.
      * @param Article $article
+     * @Route("/del/{id}", name="maic_blog_supprimer", requirements={"id" = "\d+"}, defaults={"id" = 1})
+     * @Route("/del/{slug}", name="maic_blog_supprimer_slug")
      */
     public function supprimerAction(Article $article) {
         $entityManager = $this->getDoctrine()->getManager();
@@ -129,5 +136,4 @@ class BlogController extends Controller {
                 0); //limit min
         return array('articles' => $articles);
     }
-
 }

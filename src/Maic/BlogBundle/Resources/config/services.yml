@@ -4,4 +4,12 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
 
     maic_blog.slugger:
-        class: Maic\BlogBundle\Service\Slugger
+        class: Maic\BlogBundle\Service\Slugger    
+            
+    maic_blog.slug_listener:
+        class: Maic\BlogBundle\Service\SlugListener
+        calls:
+            - [setSlugger, ["@maic_blog.slugger"]]
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: prePersist }
