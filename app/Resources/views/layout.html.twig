@@ -22,10 +22,16 @@
         <nav class="navbar navbar-inverse">
             <div class="container">
                 <ul class="nav nav-pills">
-                    <li role="presentation" class="active"><a href="{{ path('maic_blog_homepage', {page:1}) }}">Accueil</a></li>
-                    <li role="presentation"><a href="{{ path('maic_blog_voir', {id:9}) }}">Voir article 9</a></li>
-                    <li role="presentation"><a href="{{ path('maic_blog_modifier', {id:9}) }}">Modification article 9</a></li>
-                    <li role="presentation"><a href="{{ path('maic_blog_ajouter') }}">Création d'un article</a></li>
+                    <li role="presentation">
+                        <a href="{{ path('maic_blog_homepage', {page:1}) }}"  class="btn btn-danger" role="button">
+                            Accueil
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="{{ path('maic_blog_ajouter') }}" class="btn btn-danger" role="button">
+                            Créer un article
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
