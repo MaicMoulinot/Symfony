@@ -108,7 +108,19 @@ class Article {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    /**
+     * Set id. Used by Fixtures only.
+     *
+     * @param string $id
+     * @return Article
+     */
+    public function setId($id) {
+        $this->id = $id;
 
+        return $this;
+    }
+    
     /**
      * Get id
      *

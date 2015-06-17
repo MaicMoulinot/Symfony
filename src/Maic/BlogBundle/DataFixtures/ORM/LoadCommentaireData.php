@@ -5,7 +5,7 @@ namespace Maic\BlogBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use \Maic\BlogBundle\Entity\Categorie;
+use Maic\BlogBundle\Entity\Commentaire;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,27 +13,30 @@ use \Maic\BlogBundle\Entity\Categorie;
  * and open the template in the editor.
  */
 
-class LoadCategorieData extends AbstractFixture implements OrderedFixtureInterface {
+class LoadCommentaireData extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
+
         for ($x = 0; $x <= 100; $x++) {
-            $categorie = new Categorie();
-            $categorie->setNom('Musique' . $x);
-            $categorie->setId($x);
-            $manager->persist($categorie);
-            $this->addReference(('Categorie' . $x), $categorie);
+            $commentaire = new Commentaire();
+            $commentaire->setId($x);
+            $commentaire->setAuteur('Marcel');
+            $commentaire->setContenu('Mon orchestre il te déboîte');
+            $commentaire->setArticle($this->getReference('Article' . $x));
+            $manager->persist($commentaire);
+            $this->addReference(('Commentaire' . $x), $commentaire);
         }
-        $manager->flush(); 
+        $manager->flush();
     }
 
     /**
      * {@inheritDoc}
      */
     public function getOrder() {
-        return 1; // the order in which fixtures will be loaded
+        return 4; // the order in which fixtures will be loaded
     }
 
 }

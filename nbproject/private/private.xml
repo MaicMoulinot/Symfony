@@ -4,13 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Controller/BlogController.php</file>
-            <file>file:/C:/MAIC/wamp/www/exosymfony/app/AppKernel.php</file>
             <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Resources/views/Blog/formCommentaire.html.twig</file>
-            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/DataFixtures/ORM/LoadArticleData.php</file>
-            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Resources/views/Blog/voir.html.twig</file>
-            <file>file:/C:/MAIC/wamp/www/exosymfony/composer.json</file>
-            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/DataFixtures/ORM/LoadCategorieData.php</file>
-            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Resources/views/Blog/ajouter.html.twig</file>
+            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Resources/config/services.yml</file>
+            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Resources/views/Blog/formulaire.html.twig</file>
+            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Service/SlugListener.php</file>
+            <file>file:/C:/MAIC/wamp/www/exosymfony/src/Maic/BlogBundle/Service/Slugger.php</file>
         </group>
     </open-files>
 </project-private>

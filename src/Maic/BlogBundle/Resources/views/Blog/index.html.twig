@@ -1,55 +1,62 @@
 {% extends "MaicBlogBundle::layout.html.twig" %}
-{% block title %}{{parent() }}, le blog page {{ page }}{% endblock %}
+{% block title %}{{parent() }}, le blog page {% endblock %}
 {% block h1 %}Le blog {{parent() }}{% endblock %}
 {% block MaicBlog_body %}
     <h2>
         <div class="row">
-            <div class="col-lg-3">Liste des articles</div>
-            <div class="col-lg-9">
+            <div class="col-lg-6">{{ pagination.getTotalItemCount }} articles sur le blog</div>
+            <div class="col-lg-6">
                 <a href="{{ path('maic_blog_ajouter') }}" class="btn btn-danger" role="button">Créer un article</a>
             </div>
         </div>
     </h2>
-    <p>Page {{ page }}</p>
-    <ul class="list-unstyled">
-        {% for article in articles %}
-            <li>
-                <h3>
-                    <span class="glyphicon glyphicon-paperclip"></span>
-                    <a href="{{ path('maic_blog_voir', {id:article.id}) }}">{{ article.titre }}</a>
-                </h3>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <blockquote>
-                            {% if article.contenu|length > 400 %}
-                                <p class="text-justify">{{ article.contenu|slice(0, 400) }}(...)</p>
-                            {% else %}
-                                <p class="text-justify">{{ article.contenu}}</p>
+    <nav class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </nav>
+    <div>
+        <ul class="list-unstyled">
+            {% for article in pagination %}
+                <li>
+                    <h3>
+                        <span class="glyphicon glyphicon-paperclip"></span>
+                        <a href="{{ path('maic_blog_voir', {id:article.id}) }}">{{ article.titre }}</a>
+                    </h3>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <blockquote>
+                                {% if article.contenu|length > 400 %}
+                                    <p class="text-justify">{{ article.contenu|slice(0, 400) }}(...)</p>
+                                {% else %}
+                                    <p class="text-justify">{{ article.contenu}}</p>
+                                {% endif %}
+                                {% if article.categories is not empty %}
+                                    <ul class="list-inline nav nav-pills bottom-left">
+                                        {% for categorie in article.categories %}
+                                            <li>
+                                                <span class="label label-warning">{{ categorie.nom }}</span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                <footer class="navbar-text navbar-right">Par 
+                                    <a href="#" class="navbar-link">{{ article.auteur }}</a>
+                                    le {{ article.datecreation|date('d/m/Y à H:i') }}
+                                </footer>
+                            </blockquote>
+                        </div>
+                        <div class="col-lg-3">
+                            {% if article.image is not null %}
+                                <img src="{{ asset('images/') }}{{ article.image.url }}" 
+                                     alt="{{ article.image.alt|e }}" class="img-rounded img-responsive">
+                                </img>
                             {% endif %}
-                            {% if article.categories is not empty %}
-                                <ul class="list-inline nav nav-pills bottom-left">
-                                    {% for categorie in article.categories %}
-                                        <li>
-                                            <span class="label label-warning">{{ categorie.nom }}</span>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                            <footer class="navbar-text navbar-right">Par 
-                                <a href="#" class="navbar-link">{{ article.auteur }}</a>
-                                le {{ article.datecreation|date('d/m/Y à H:i') }}
-                            </footer>
-                        </blockquote>
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        {% if article.image is not null %}
-                            <img src="{{ asset('images/') }}{{ article.image.url }}" 
-                                 alt="{{ article.image.alt|e }}" class="img-rounded img-responsive">
-                            </img>
-                        {% endif %}
-                    </div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

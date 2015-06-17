@@ -19,23 +19,36 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-        $article = new Article();
-        $article->setAuteur('Elle');
-        $article->setContenu('Plein de truc');
-        $article->setTitre('Titre cool');
-        $article->setImage($this->getReference('Categorie'));
+        for ($x = 0; $x <= 100; $x++) {
+            $article = new Article();
+            $article->setAuteur('Big Brother');
+            $article->setContenu('Francis Cabrel is a French singer-songwriter and guitarist. '
+                    . 'He has released a number of albums falling mostly within the realm of folk, '
+                    . 'with occasional forays into blues or country. Francis Cabrel (born 23 November '
+                    . '1953 in Astaffort, France) is a French singer-songwriter and guitarist. He has '
+                    . 'released a number of albums falling mostly within the realm of folk, with '
+                    . 'occasional forays into blues or country. Several of his songs, such as "L\'encre '
+                    . 'de tes yeux," "Petite Marie," and "La corrida," have become enduring favorites '
+                    . 'in French music. His first hit song was "Petite Marie,", in 1974; since then '
+                    . 'he has sold 21 million albums. The song was about the woman who soon became his wife, '
+                    . 'Mariette, with whom he was still married in 2015. An unauthorized biography published '
+                    . 'in 2015. Cabrel, who is one of the most private French singers, attempted to have '
+                    . 'the book suppressed.');
+            $article->setTitre('Francis Cabrel' . $x);
+            $article->setImage($this->getReference('Image' . $x));
+            $article->setId($x);
+            $manager->persist($article);
 
-        $manager->persist($article);
+            $this->addReference(('Article' . $x), $article);
+        }
         $manager->flush();
-
-        $this->addReference('Article', $article);
     }
 
     /**
      * {@inheritDoc}
      */
     public function getOrder() {
-        return 1; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
 
 }

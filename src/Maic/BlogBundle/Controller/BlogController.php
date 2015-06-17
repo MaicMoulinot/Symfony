@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Form;
 
 /**
- * @Route("/")
+ * @Route("/blog")
  */
 class BlogController extends Controller {
 
@@ -23,10 +23,17 @@ class BlogController extends Controller {
      * @Template()
      * @Route("/{page}", name="maic_blog_homepage", requirements={"page" = "\d+"}, defaults={"page" = 1})
      */
-    public function indexAction($page) {
+    public function indexAction($page) {     
         $entityManager = $this->getDoctrine()->getManager();
         $articles = $entityManager->getRepository('MaicBlogBundle:Article')->getArticles();
-        return array('articles' => $articles, 'page' => $page);
+
+        $paginator = $this->get('knp_paginator');
+        $request = $this->getRequest();
+        $pagination = $paginator->paginate(
+                $articles, $request->query->getInt('page', $page)
+                /* page number */, 10/* limit per page */
+        );
+        return array('pagination' => $pagination);
     }
 
     /**
@@ -42,7 +49,7 @@ class BlogController extends Controller {
         $commentaire = new Commentaire();
         $commentaire->setArticle($article);
         $form = $this->createForm(new CommentaireType(), $commentaire);
-        return $this->persist($article, $form, $commentaire);
+        return $this->persist($form, $article, $commentaire);
     }
 
     /**
@@ -55,7 +62,7 @@ class BlogController extends Controller {
      */
     public function modifierAction(Article $article) {
         $form = $this->createForm(new ArticleType(), $article);
-        return $this->persist($article, $form, null);
+        return $this->persist($form, $article, null);
     }
 
     /**
