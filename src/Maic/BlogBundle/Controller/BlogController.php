@@ -9,6 +9,7 @@ use Maic\BlogBundle\Entity\Article;
 use Maic\BlogBundle\Entity\Commentaire;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Form;
 
 /**
  * @Route("/")
@@ -23,8 +24,8 @@ class BlogController extends Controller {
      * @Route("/{page}", name="maic_blog_homepage", requirements={"page" = "\d+"}, defaults={"page" = 1})
      */
     public function indexAction($page) {
-        $em = $this->getDoctrine()->getManager();
-        $articles = $em->getRepository('MaicBlogBundle:Article')->getArticles();
+        $entityManager = $this->getDoctrine()->getManager();
+        $articles = $entityManager->getRepository('MaicBlogBundle:Article')->getArticles();
         return array('articles' => $articles, 'page' => $page);
     }
 
@@ -37,21 +38,11 @@ class BlogController extends Controller {
      * @Route("/article/{slug}", name="maic_blog_voir_slug")
      */
     public function voirAction(Article $article) {
-//        $article = $entityManager->getRepository('MaicBlogBundle:Article')->getArticleDetails($id);
+//        $article = $entityManager->getRepository('MaicBlogBundle:Article')->getArticleDetails($article->getId());
         $commentaire = new Commentaire();
+        $commentaire->setArticle($article);
         $form = $this->createForm(new CommentaireType(), $commentaire);
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $commentaire->setArticle($article);
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($commentaire);
-                $entityManager->flush();
-                return $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
-            }
-        }
-        return array('article' => $article, 'form' => $form->createView());
+        return $this->persist($article, $form, $commentaire);
     }
 
     /**
@@ -63,7 +54,8 @@ class BlogController extends Controller {
      * @Route("/edit/{slug}", name="maic_blog_modifier_slug")
      */
     public function modifierAction(Article $article) {
-        return $this->persistArticle($article);
+        $form = $this->createForm(new ArticleType(), $article);
+        return $this->persist($article, $form, null);
     }
 
     /**
@@ -75,40 +67,36 @@ class BlogController extends Controller {
      */
     public function ajouterAction() {
         $article = new Article();
-        return $this->persistArticle($article);
+        return $this->modifierAction($article);
     }
 
     /**
-     * Fonction de persistance d'un article.
+     * Fonction de persistance.
+     * @param Form $form
      * @param Article $article
-     * @return type
+     * @param Commentaire $commentaire
+     * @return type array ou redirection vers maic_blog_voir.
      */
-    private function persistArticle(Article $article) {
-        $isValid = false;
-        $form = $this->createForm(new ArticleType(), $article);
+    private function persist(Form $form, Article $article, Commentaire $commentaire) {
+        $isPersisted = false;
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                // Génération du Slug.
-//                $slugger = $this->get('maic_blog.slugger');
-//                $slug = $slugger->getSlug($article->getTitre());
-//                $article->setSlug($slug);
-                
-                // Persistance du l'article.
+                $objectToPersist = ($commentaire == null ? $article : $commentaire);
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($article);
+                $entityManager->persist($objectToPersist);
                 $entityManager->flush();
-                $isValid = true;
+                $isPersisted = true;
             }
         }
         $return = array('article' => $article, 'form' => $form->createView());
-        if ($isValid) {
+        if ($isPersisted) {
             $return = $this->redirectToRoute('maic_blog_voir', array('id' => $article->getId()));
         }
         return $return;
     }
-    
+
     /**
      * Supprime l'article.
      * @param Article $article
@@ -136,4 +124,5 @@ class BlogController extends Controller {
                 0); //limit min
         return array('articles' => $articles);
     }
+
 }
