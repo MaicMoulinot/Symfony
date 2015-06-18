@@ -90,3 +90,9 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+# Guzzle Bundle Configuration
+misd_guzzle:
+    service_builder:
+        class:              "Guzzle\Service\Builder\ServiceBuilder"
+        configuration_file: "%kernel.root_dir%/config/webservices.json"

@@ -17,8 +17,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Misd\GuzzleBundle\MisdGuzzleBundle(),
             new AppBundle\AppBundle(),
             new Maic\BlogBundle\MaicBlogBundle(),
+            new Maic\ClientBundle\MaicClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
